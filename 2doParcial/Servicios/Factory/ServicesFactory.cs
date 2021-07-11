@@ -25,8 +25,9 @@ namespace Servicios.Factory
             {
                 case "SqlLogger":
                     return new SqlLogger(ConfigurationManager.ConnectionStrings["azureLoggerDB"].ConnectionString);
-                case "FileLogger":
-                    return new FileLogger(ConfigurationManager.AppSettings["loggerPath"]);
+                case "LegacyClientLogger":
+                    Cliente.Logger legacyLogger = new Cliente.Logger("", Cliente.LoggerType.FILE);
+                    return new LoggerAdapter(legacyLogger);
                 default:
                     return new FileLogger(ConfigurationManager.AppSettings["loggerPath"]);
             }
