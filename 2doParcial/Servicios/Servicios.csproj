@@ -42,15 +42,17 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="Contracts\ILogger.cs" />
+    <Compile Include="BLL\LoggerFacade.cs" />
+    <Compile Include="DAL\Contracts\ILogger.cs" />
+    <Compile Include="DAL\Factory\LogMapper.cs" />
     <Compile Include="Domain\Log.cs" />
-    <Compile Include="Factory\ServicesFactory.cs" />
-    <Compile Include="Implementations\FileLogger.cs" />
-    <Compile Include="Implementations\LoggerAdapter.cs" />
-    <Compile Include="Implementations\SqlLogger.cs" />
+    <Compile Include="DAL\Factory\ServicesFactory.cs" />
+    <Compile Include="DAL\Implementations\FileLogger.cs" />
+    <Compile Include="DAL\Implementations\LoggerAdapter.cs" />
+    <Compile Include="DAL\Implementations\SqlLogger.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="Tools\FileHelper.cs" />
-    <Compile Include="Tools\SqlHelper.cs" />
+    <Compile Include="DAL\Tools\FileHelper.cs" />
+    <Compile Include="DAL\Tools\SqlHelper.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\Cliente\Cliente.csproj">

@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.IO;
 
-namespace Servicios.Tools
+namespace Servicios.DAL.Tools
 {
     class FileHelper
     {

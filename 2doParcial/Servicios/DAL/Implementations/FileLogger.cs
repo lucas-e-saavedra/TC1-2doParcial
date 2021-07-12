@@ -1,10 +1,11 @@
 ﻿using System;
 using System.Collections.Generic;
-using Servicios.Contracts;
+using Servicios.DAL.Contracts;
 using Servicios.Domain;
-using Servicios.Tools;
+using Servicios.DAL.Tools;
+using Servicios.DAL.Factory;
 
-namespace Servicios.Implementations
+namespace Servicios.DAL.Implementations
 {
     internal class FileLogger : ILogger
     {
@@ -17,17 +18,14 @@ namespace Servicios.Implementations
             FileHelper fileHelper = new FileHelper(filePath);
             List<String> lines = fileHelper.Read();
 
-            Converter<string, Log> converter = new Converter<string, Log>(convertLog);
+            Converter<string, Log> converter = new Converter<string, Log>(LogMapper.fromString);
             return lines.ConvertAll<Log>(converter);
-        }
-        private Log convertLog(String oneString) { 
-            return new Log() { message = oneString, severity = EnumSeverity.DEBUG};
         }
 
         public void Store(Log oneLog)
         {
             FileHelper file = new FileHelper(filePath);
-            file.Write($"Severity: {oneLog.severity}, message:{oneLog.message}");
+            file.Write(LogMapper.toString(oneLog));
         }
     }
 }

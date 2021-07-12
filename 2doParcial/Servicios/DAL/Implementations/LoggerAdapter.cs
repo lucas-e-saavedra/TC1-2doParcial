@@ -1,4 +1,5 @@
-﻿using Servicios.Contracts;
+﻿using Servicios.DAL.Contracts;
+using Servicios.DAL.Factory;
 using Servicios.Domain;
 using System;
 using System.Collections.Generic;
@@ -6,7 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 
-namespace Servicios.Implementations
+namespace Servicios.DAL.Implementations
 {
     class LoggerAdapter : ILogger
     {
@@ -21,7 +22,7 @@ namespace Servicios.Implementations
             String[] legacyLogs = adaptee.ReadAll();
             List<Log> adaptedLogs = new List<Log>();
             foreach (string oneLine in legacyLogs) {
-                Log oneLog = new Log() { message = oneLine, severity = EnumSeverity.DEBUG };
+                Log oneLog = LogMapper.fromString(oneLine);
                 adaptedLogs.Add(oneLog);
             }
             return adaptedLogs;
@@ -29,7 +30,7 @@ namespace Servicios.Implementations
 
         public void Store(Log oneLog)
         {
-            adaptee.Write(oneLog.message);
+            adaptee.Write(LogMapper.toString(oneLog));
         }
     }
 }

@@ -1,8 +1,8 @@
-﻿using Servicios.Contracts;
-using Servicios.Implementations;
+﻿using Servicios.DAL.Contracts;
+using Servicios.DAL.Implementations;
 using System.Configuration;
 
-namespace Servicios.Factory
+namespace Servicios.DAL.Factory
 {
     public sealed class ServicesFactory
     {

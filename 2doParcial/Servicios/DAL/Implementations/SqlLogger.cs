@@ -1,11 +1,12 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.Data.SqlClient;
-using Servicios.Contracts;
+using Servicios.DAL.Contracts;
 using Servicios.Domain;
-using Servicios.Tools;
+using Servicios.DAL.Tools;
+using Servicios.DAL.Factory;
 
-namespace Servicios.Implementations
+namespace Servicios.DAL.Implementations
 {
     class SqlLogger : ILogger
     {
@@ -25,12 +26,7 @@ namespace Servicios.Implementations
                 {
                     object[] values = new object[dr.FieldCount];
                     dr.GetValues(values);
-                    EnumSeverity oneSeverity = (EnumSeverity)Enum.Parse(typeof(EnumSeverity), values[2].ToString());
-                    Log oneLog = new Log()
-                    {
-                        severity = oneSeverity,
-                        message = values[3].ToString(),
-                    };
+                    Log oneLog = LogMapper.fromValues(values);
                     allItems.Add(oneLog);
                 }
             }
