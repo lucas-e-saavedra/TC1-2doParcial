@@ -1,6 +1,6 @@
 ﻿using Servicios.DAL.Contracts;
 using Servicios.DAL.Implementations;
-using System.Configuration;
+using Servicios.DAL.Implementations.Decorator;
 
 namespace Servicios.DAL.Factory
 {
@@ -21,15 +21,16 @@ namespace Servicios.DAL.Factory
         }
 
         public ILogger GetLogger() {
-            switch (ConfigurationManager.AppSettings["loggerImplementation"])
+            switch (ApplicationSettings.getLoggerImplementation())
             {
                 case "SqlLogger":
-                    return new SqlLogger(ConfigurationManager.ConnectionStrings["azureLoggerDB"].ConnectionString);
+                    return new SqlLogger(ApplicationSettings.getSqlLoggerConnectionString());
                 case "LegacyClientLogger":
-                    Cliente.Logger legacyLogger = new Cliente.Logger("", Cliente.LoggerType.FILE);
-                    return new LoggerAdapter(legacyLogger);
+                    Cliente.Logger legacyLogger = new Cliente.Logger(ApplicationSettings.getLegacyLoggerSource(), ApplicationSettings.getLegacyLoggerType());
+                    //return new LoggerAdapter(legacyLogger);
+                    return new EmailDecorator(new LoggerAdapter(legacyLogger));
                 default:
-                    return new FileLogger(ConfigurationManager.AppSettings["loggerPath"]);
+                    return new FileLogger(ApplicationSettings.getFileLoggerPath());
             }
         }
     }

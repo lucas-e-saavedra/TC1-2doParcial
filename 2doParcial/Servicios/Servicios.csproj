@@ -42,9 +42,12 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="ApplicationSettings.cs" />
     <Compile Include="BLL\LoggerFacade.cs" />
     <Compile Include="DAL\Contracts\ILogger.cs" />
+    <Compile Include="DAL\Implementations\Decorator\LoggerDecorator.cs" />
     <Compile Include="DAL\Factory\LogMapper.cs" />
+    <Compile Include="DAL\Implementations\Decorator\EmailDecorator.cs" />
     <Compile Include="Domain\Log.cs" />
     <Compile Include="DAL\Factory\ServicesFactory.cs" />
     <Compile Include="DAL\Implementations\FileLogger.cs" />
