@@ -16,7 +16,7 @@ namespace Servicios.DAL.Tools
         {
             using (StreamWriter streamWriter = new StreamWriter(filePath, true))
             {
-                streamWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH:mm:ss") } | Log: { message }");
+                streamWriter.WriteLine($"{DateTime.Now.ToString("yyyy-MM-dd HH.mm.ss") }|{ message }");
             }
         }
 

@@ -20,6 +20,7 @@ namespace Servicios.DAL.Factory
 
         public static Log fromString(String stringLog)
         {
+            stringLog = stringLog.Split('|').Last();
             String stringSeverity = stringLog.Split(':').First();
             String stringMessage = stringLog.Substring(stringSeverity.Length +2);
             EnumSeverity logSeverity = (EnumSeverity)Enum.Parse(typeof(EnumSeverity), stringSeverity);
