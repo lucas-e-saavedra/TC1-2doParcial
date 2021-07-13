@@ -17,7 +17,11 @@ namespace ConsoleApp
             //Implementacion 2
             Servicios.BLL.LoggerFacade.Current.WriteLog("Este es un log de ejemplo", Servicios.Domain.EnumSeverity.ERROR);
             Servicios.BLL.LoggerFacade.Current.WriteLog("Est es otro log");
+            Servicios.BLL.LoggerFacade.Current.WriteLog("VAMOS A MORIR... CriticalError", Servicios.Domain.EnumSeverity.ERROR);
+            Servicios.BLL.LoggerFacade.Current.WriteLog("Se armó la gorda... FatalError", Servicios.Domain.EnumSeverity.ERROR);
+
             List<Servicios.Domain.Log> logs = Servicios.BLL.LoggerFacade.Current.GetLogs();
+            logs.ForEach(Console.WriteLine);
             Console.ReadKey();
         }
     }

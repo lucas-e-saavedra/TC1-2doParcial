@@ -39,5 +39,35 @@ namespace Servicios
             }
 
         }
+
+        internal static string getEmailHost()
+        {
+            return ConfigurationManager.AppSettings["LogEmail_Host"];
+        }
+        internal static int getEmailPort()
+        {
+            try {
+                string port = ConfigurationManager.AppSettings["LogEmail_Port"];
+                return int.Parse(port);
+            } catch {
+                return 0;
+            }
+        }
+        internal static string getEmailSenderAccount()
+        {
+            return ConfigurationManager.AppSettings["LogEmail_FromEmail"];
+        }
+        internal static string getEmailSenderPassword()
+        {
+            return ConfigurationManager.AppSettings["LogEmail_Password"];
+        }
+        internal static string getEmailCriticalErrorAddress()
+        {
+            return ConfigurationManager.AppSettings["EmailCriticalError"];
+        }
+        internal static string getEmailFatalErrorAddress()
+        {
+            return ConfigurationManager.AppSettings["EmailFatalError"];
+        }
     }
 }

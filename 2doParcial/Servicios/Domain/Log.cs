@@ -1,4 +1,5 @@
-﻿using System;
+﻿using Servicios.DAL.Factory;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -12,6 +13,10 @@ namespace Servicios.Domain
 
         public EnumSeverity severity { get; set; }
 
+        public override string ToString()
+        {
+            return LogMapper.toString(this);
+        }
     }
 
     public enum EnumSeverity { DEBUG, INFO, WARNING, ERROR }

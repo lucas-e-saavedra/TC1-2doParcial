@@ -1,7 +1,11 @@
 ﻿using Servicios.DAL.Contracts;
 using Servicios.DAL.Factory;
 using Servicios.Domain;
+using System;
 using System.Collections.Generic;
+using System.IO;
+using System.Net;
+using System.Net.Mail;
 
 namespace Servicios.DAL.Implementations.Decorator
 {
@@ -18,14 +22,32 @@ namespace Servicios.DAL.Implementations.Decorator
         {
             wrapper.Store(oneLog);
             if (oneLog.message.Contains("CriticalError")) {
-                sendEmail("soporteNivel1@email.com", "CriticalError", LogMapper.toString(oneLog));
+                sendEmail(ApplicationSettings.getEmailCriticalErrorAddress(), "CriticalError", LogMapper.toString(oneLog));
             }
             if (oneLog.message.Contains("FatalError")) {
-                sendEmail("soporteNivel2@email", "FatalError", LogMapper.toString(oneLog));
+                sendEmail(ApplicationSettings.getEmailFatalErrorAddress(), "FatalError", LogMapper.toString(oneLog));
             }
         }
 
-        private void sendEmail(string to, string title, string message) { 
+        private void sendEmail(string to, string title, string message) {
+            using (MailMessage email = new MailMessage(ApplicationSettings.getEmailSenderAccount(), to)) {
+                email.Subject = title;
+                email.Body = message;
+                email.IsBodyHtml = false;
+                SmtpClient smtp = new SmtpClient(ApplicationSettings.getEmailHost(), ApplicationSettings.getEmailPort());
+                smtp.EnableSsl = true;
+                NetworkCredential credential = new NetworkCredential(ApplicationSettings.getEmailSenderAccount(), ApplicationSettings.getEmailSenderPassword());
+                smtp.UseDefaultCredentials = true;
+                smtp.Credentials = credential;
+                try {
+                    smtp.Send(email);
+                } catch (Exception ex) {
+                    throw new Exception("No se pudo enviar el email", ex.InnerException);
+                } finally {
+                    smtp.Dispose();
+                }
+            }
         }
+
     }
 }
